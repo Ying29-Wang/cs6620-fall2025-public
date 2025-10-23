@@ -58,7 +58,7 @@ jobs:
         run: |
           echo "Sending SSM command to deploy Docker container..."
           COMMAND_ID=$(aws ssm send-command \
-            --instance-ids "$INSTANCE_ID" \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
             --comment "Deploy Docker container from GitHub Actions" \
             --query "Command.CommandId" \
