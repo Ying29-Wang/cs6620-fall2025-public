@@ -6,7 +6,7 @@ on:
       - week02
 
 jobs:
- build-and-push:
+  build-and-push:
     name: Build and Push to Docker Hub
     runs-on: ubuntu-latest
 
@@ -38,7 +38,7 @@ jobs:
 
   deploy:
     name: Deploy to EC2 via SSM
-    need: build-and-push
+    needs: build-and-push
     runs-on: ubuntu-latest
 
     steps:
@@ -78,9 +78,9 @@ jobs:
           echo "SSM command sent successfully. Command ID: $COMMAND_ID"
           echo "command-id=$COMMAND_ID" >> $GITHUB_OUTPUT
 
-        - name: Verify SSM command execution
-          run: |
-            echo "Checking SSM command execution status..."
-            aws ssm list-command-invocations \
-              --command-id ${{ steps.ssm-deploy.outputs.command-id }} \
-              --details
+      - name: Verify SSM command execution
+        run: |
+          echo "Checking SSM command execution status..."
+          aws ssm list-command-invocations \
+            --command-id ${{ steps.ssm-deploy.outputs.command-id }} \
+            --details
