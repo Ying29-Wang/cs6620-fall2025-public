@@ -8,6 +8,7 @@ from io import StringIO
 from flask import Flask, render_template, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 from pydub import AudioSegment
+from datetime import datetime
 import tempfile
 
 app = Flask(__name__)
@@ -505,6 +506,24 @@ def delete_labels():
     except Exception as e:
         return jsonify({"success": False, "message": f"Error deleting labels file: {str(e)}"})
 
+@app.route('/hello')
+def hello():
+    return f'''
+    <h1>Hello from Automated CI/CD Pipeline!</h1>
+    <p><strong>Version:</strong> 2.0 - Automated Deployment</p>
+    <p><strong>Deployed via:</strong> GitHub Actions + AWS SSM</p>
+    <p><strong>Build Date:</strong> {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+    <p><strong>Assignment:</strong> Automated EC2 Deployment</p>
+    '''
+
+@app.route('/health')
+def health():
+    return {
+        'status': 'healthy',
+        'version': '2.0',
+        'deployment_method': 'automated',
+        'timestamp': datetime.now().isoformat()
+    }
 
 # Auto-load CSV and audio files on startup
 def auto_load_data():
