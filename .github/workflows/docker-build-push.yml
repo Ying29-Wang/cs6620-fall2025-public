@@ -1,4 +1,4 @@
-name: Docker Build, Push and Deploy via SSM
+name: Docker Build, Push and Deploy via SSM v2
 
 on:
   push:
